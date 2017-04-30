@@ -6,6 +6,8 @@ use PhpSpec\ObjectBehavior;
 
 class ControllerLocatorSpec extends ObjectBehavior
 {
+    const CODE_POOL = 'local';
+
     private $srcPath;
     private $specPath;
 
@@ -13,6 +15,8 @@ class ControllerLocatorSpec extends ObjectBehavior
     {
         $this->srcPath  = realpath(__DIR__.'/../../../../../../src');
         $this->specPath = realpath(__DIR__.'/../../../../../');
+
+        $this->beConstructedWith(self::CODE_POOL);
     }
 
     function it_is_a_locator()

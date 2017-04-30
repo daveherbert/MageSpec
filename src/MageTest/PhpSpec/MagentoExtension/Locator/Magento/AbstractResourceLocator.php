@@ -37,13 +37,14 @@ abstract class AbstractResourceLocator
     protected $filesystem;
     protected $codePool;
 
-    public function __construct($srcNamespace = '', $specNamespacePrefix = '',
-                                $srcPath = 'src', $specPath = 'spec', Filesystem $filesystem = null, $codePool = null)
+    public function __construct($codePool, $srcNamespace = '', $specNamespacePrefix = '',
+                                $srcPath = 'src', $specPath = 'spec', Filesystem $filesystem = null)
     {
+        echo $codePool;
         $this->checkInitialData();
 
         $this->filesystem = $filesystem ? : new Filesystem;
-        $this->codePool   = $codePool ? : 'local';
+        $this->codePool   = $codePool;
 
         $this->srcPath       = rtrim(realpath($srcPath), '/\\') . DIRECTORY_SEPARATOR . $this->codePool . DIRECTORY_SEPARATOR;
         $this->specPath      = rtrim(realpath($specPath), '/\\') . DIRECTORY_SEPARATOR . $this->codePool . DIRECTORY_SEPARATOR;

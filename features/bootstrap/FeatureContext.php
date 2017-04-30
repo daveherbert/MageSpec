@@ -7,6 +7,7 @@ use OutputSpecification\ClassSpecification;
 use OutputSpecification\ObjectSpecification;
 use OutputSpecification\SpecSpecification;
 use PhpSpec\Console\Application;
+use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Filesystem\Filesystem;
 
 
@@ -413,6 +414,152 @@ class FeatureContext implements SnippetAcceptingContext
             'src/Behat/Test.php',
             'Behat\Test'
         ));
+    }
+
+    /**
+     * @Given that there is no code pool defined in config
+     */
+    public function thatThereIsNoCodePoolDefinedInConfig()
+    {
+        $this->configFile = __DIR__ . '/config_files/standard.yml';
+    }
+
+    /**
+     * @When the user describes a Magento object
+     */
+    public function theUserDescribesAMagentoObject()
+    {
+        $this->applicationTester->run(
+            sprintf(
+                'describe:%s --config %s %s',
+                'model',
+                $this->configFile,
+                strtolower($this->namespace) . '/test'
+            ),
+            array('decorated' => true, 'interactive' => true)
+        );
+    }
+
+    /**
+     * @Then the user will be prompted to select a target code pool
+     */
+    public function theUserWillBePromptedToSelectATargetCodePool()
+    {
+        $stream = $this->applicationTester->getOutput()->getStream();
+        rewind($stream);
+        expect(stream_get_contents($stream))->toBe("Please enter your target code pool: ([l]ocal/[c]ommunity)");
+    }
+
+    /**
+     * @Given the spec will be created in the selected code pool
+     */
+    public function theSpecWillBeCreatedInTheSelectedCodePool()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given selects :arg1 as the target code pool
+     */
+    public function selectsAsTheTargetCodePool($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When the user describes a second Magento object
+     */
+    public function theUserDescribesASecondMagentoObject()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then the user will be offered :arg1 as the default choice of code pool
+     */
+    public function theUserWillBeOfferedAsTheDefaultChoiceOfCodePool($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given that :arg1 is configured as the default code pool
+     */
+    public function thatIsConfiguredAsTheDefaultCodePool($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then the spec will be created in the :arg1 pool
+     */
+    public function theSpecWillBeCreatedInThePool($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given sets the codepool flag to :arg1
+     */
+    public function setsTheCodepoolFlagTo($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then they will see an illegal code pool error
+     */
+    public function theyWillSeeAnIllegalCodePoolError()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given that there is a :arg1 code pool spec
+     */
+    public function thatThereIsACodePoolSpec($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given there is a :arg1 code pool spec
+     */
+    public function thereIsACodePoolSpec($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When the user calls the run command with no path
+     */
+    public function theUserCallsTheRunCommandWithNoPath()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then all the specs will be executed
+     */
+    public function allTheSpecsWillBeExecuted()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When the user calls the run command with the community code pool path
+     */
+    public function theUserCallsTheRunCommandWithTheCommunityCodePoolPath()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then only the community spec will be executed
+     */
+    public function onlyTheCommunitySpecWillBeExecuted()
+    {
+        throw new PendingException();
     }
 
     /**

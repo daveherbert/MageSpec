@@ -22,6 +22,7 @@
 namespace MageTest\PhpSpec\MagentoExtension\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * DescribeModelCommand
@@ -62,6 +63,16 @@ HELP;
         $this
             ->setName('describe:model')
             ->setDescription('Describe a Magento Model specification')
+            ->setDefinition(
+                array(
+                    new InputOption(
+                        'codepool',
+                        null,
+                        InputArgument::OPTIONAL,
+                        'The Magento Codepool in which to create the class'
+                    )
+                )
+            )
             ->addArgument('alias', InputArgument::REQUIRED, 'Magento Model alias to be described');
     }
 }

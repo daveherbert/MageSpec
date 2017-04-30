@@ -24,6 +24,7 @@ namespace MageTest\PhpSpec\MagentoExtension\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 abstract class MageCommand extends Command
 {
@@ -51,6 +52,32 @@ abstract class MageCommand extends Command
         }
 
         $container = $this->getApplication()->getContainer();
+        $mageLocator = $container->getParam('mage_locator');
+        $mageLocator['code_pool'] =
+            $input->getOption('codepool') ?: $container->getParam('mage_locator.code_pool');
+        $container->setParam('mage_locator', $mageLocator);
+
+        if (!array_key_exists('code_pool', $container->getParam('mage_locator'))) {
+             throw new \RuntimeException('No code pool specified.');
+        }
+
+        if ($mageLocator['code_pool'] === null) {
+
+            $helper = $this->getHelper('question');
+
+            $question = new ChoiceQuestion(
+                'Please select your favorite color (defaults to red)',
+                array('red', 'blue', 'yellow'),
+                0
+            );
+            $question->setErrorMessage('Color %s is invalid.');
+
+            $color = $helper->ask($input, $output, $question);
+            $output->writeln('You have just selected: '.$color);
+
+//            $output->writeln('Please enter your target code pool: ([l]ocal/[c]ommunity)');
+        }
+
         $container->configure();
 
         $classname = $this->type . ':' . $alias;
